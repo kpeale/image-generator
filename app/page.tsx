@@ -1,3 +1,8 @@
-export default function Home() {
-  return <div className='text-5xl text-red-950'>Home</div>;
+import Home from '@/components/Home/Home';
+export default function Homepage() {
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 }
