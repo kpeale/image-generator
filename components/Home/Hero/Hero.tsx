@@ -1,7 +1,57 @@
+/* eslint-disable @next/next/no-img-element */
+'use client';
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import axios from 'axios';
+import { Loader } from 'lucide-react';
+import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 const Hero = () => {
+  const [prompt, setPrompt] = useState('');
+  const [image, setImage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const handleImageGeneration = async () => {
+    setLoading(true);
+    const options = {
+      method: 'POST',
+      url: 'https://ai-text-to-image-generator-flux-free-api.p.rapidapi.com/aaaaaaaaaaaaaaaaaiimagegenerator/quick.php',
+      headers: {
+        'x-rapidapi-key': '84ec066791msh7231cb03ec33cd1p16b5afjsn102915719077',
+        'x-rapidapi-host':
+          'ai-text-to-image-generator-flux-free-api.p.rapidapi.com',
+        'Content-Type': 'application/json',
+      },
+      data: {
+        prompt,
+        style_id: 4,
+        size: '1-1',
+      },
+    };
+    try {
+      const response = await axios.request(options);
+      setImage(response.data.final_result[0].origin);
+
+      console.log('API response:', response.data); // <-- ADD THIS
+
+      toast.success('Image generated successfully');
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error('error.response.data.message');
+      } else {
+        toast.error('An unexpected error occured');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownloadImage = () => {
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.href = image;
+    link.download = 'generated-img.jpg';
+    link.click();
+  };
   return (
     <div className='w-[95%] min-h-screen relative mx-auto mt-[20vh] '>
       <div className='relative z-10 text-white flex-col items-center justify-center'>
@@ -18,10 +68,13 @@ const Hero = () => {
             type='text'
             placeholder='Generate Your Dream Image '
             className='h-full rounded-lg outline-none w-full text-black block flex-1 placeholder:text-xs sm:placeholder:text-base'
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
           />
           <Button
             variant={'default'}
             size={'lg'}
+            onClick={handleImageGeneration}
           >
             Generate
           </Button>
@@ -35,6 +88,27 @@ const Hero = () => {
           <Button variant={'secondary'}>Animation</Button>
           <Button variant={'secondary'}>Business</Button>
         </div>
+        {loading && (
+          <div>
+            <Loader className='animate-spin mt-6 flex items-center justify-center mx-auto my-0 ' />
+          </div>
+        )}
+        {image && (
+          <div className='mt-8 flex flex-col items-center justify-center mx-auto my-0'>
+            <img
+              src={image}
+              alt='ai image'
+              className='max-w-full h-[500px] rounded-lg shadow-lg '
+              loading='lazy'
+            />
+            <Button
+              className='mt-4 mb-4 bg-orange-500 hover:bg-orange-800'
+              onClick={handleDownloadImage}
+            >
+              Download
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
