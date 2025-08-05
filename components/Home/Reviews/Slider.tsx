@@ -1,17 +1,18 @@
 'use client';
-import Image from 'next/image';
+import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import ReviewCards from './ReviewCards';
 
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1324 },
-    items: 3,
+    items: 1,
     slidesToSlide: 1,
   },
   tablet: {
     breakpoint: { max: 1324, min: 764 },
-    items: 2,
+    items: 1,
     slidesToSlide: 1,
   },
   mobile: {
@@ -21,7 +22,7 @@ const responsive = {
   },
 };
 
-const ImageSlider = () => {
+const Slider = () => {
   return (
     <Carousel
       arrows={true}
@@ -32,25 +33,31 @@ const ImageSlider = () => {
       autoPlaySpeed={5000}
       keyBoardControl={true}
     >
-      {['r1.jpg', 'r2.jpg', 'r3.jpg', 'r4.jpg', 'r5.jpg', 'r6.jpg'].map(
-        (image, index) => (
-          <div
-            key={index}
-            className='p-4'
-          >
-            <div className='h-[400px] relative'>
-              <Image
-                src={`/images/${image}`}
-                alt='image'
-                className='object-cover rounded-md'
-                fill
-              />
-            </div>
-          </div>
-        )
-      )}
+      <div>
+        <ReviewCards
+          image='/images/u1.jpg'
+          name='john doe'
+          role='Engineer'
+        />
+      </div>
+
+      <div>
+        <ReviewCards
+          image='/images/u2.jpg'
+          name='Jessica doe'
+          role='Content creator'
+        />
+      </div>
+
+      <div>
+        <ReviewCards
+          image='/images/u3.jpg'
+          name='Mary Slessor'
+          role='Web Developer'
+        />
+      </div>
     </Carousel>
   );
 };
 
-export default ImageSlider;
+export default Slider;
