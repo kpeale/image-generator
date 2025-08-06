@@ -7,16 +7,19 @@ type Props = {
   role: string;
 };
 
+
+
 const ReviewCards = ({ image, name, role }: Props) => {
   return (
     <div className='flex items-center justify-center flex-col'>
       <QuoteIcon className='w-10 h-10 text-yellow-300' />
+
       <p className='text-center mt-4 text-white text-base md:text-lg lg:text-xl font-semibold text-opacity-80'>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia
-        expedita repudiandae quisquam asperiores ipsum magni excepturi suscipit!
-        Culpa qui quas maiores at nesciunt. Unde hic tenetur odit maxime
-        explicabo quod!
+        This platform helped me launch my AI image business in less than a week.
+        I had zero technical background, but the tools were easy to use and
+        incredibly powerful. Highly recommend it for entrepreneurs!
       </p>
+
       <div className='mt-8'>
         <h1 className='text-base md:text-2xl font-bold text-white text-center'>
           {name}

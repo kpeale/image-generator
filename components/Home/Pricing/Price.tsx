@@ -17,9 +17,10 @@ const Price = () => {
             Our Pricing Plans
           </h1>
           <p className='text-white font-medium text-opacity-70'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-            sint vitae molestias aliquam maiores, atque fuga, pariatur voluptas
-            rem sed quaerat eum quidem? sunt.
+            Whether you are just getting started or scaling up, we offer pricing
+            options tailored to your needs. Enjoy premium AI features without
+            breaking the bank — built for creators, developers, and
+            entrepreneurs alike.
           </p>
           <div className='mt-8'>
             <div className='flex items-center space-x-3 mb-3'>

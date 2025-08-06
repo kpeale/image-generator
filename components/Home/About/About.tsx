@@ -30,10 +30,10 @@ const About = () => {
             Create your own AI Business easily
           </h1>
           <p className='text-gray-200 mb-8 text-base'>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Repudiandae, neque et. Quidem quibusdam eius exercitationem pariatur
-            quia dolorem dolore distinctio, velit non, accusantium maxime? Culpa
-            blanditiis natus id excepturi quae?
+            We help individuals and startups launch AI-driven businesses without
+            writing a single line of code. From image generation to automation
+            tools, our platform gives you everything you need to build,
+            customize, and scale your own AI solution.
           </p>
           <Button
             className='bg-rose-500 w-36 h-12 text-base uppercase'
