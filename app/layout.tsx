@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${font.className} bg-gray-900  antialiased`}>
         <ResponsiveNav />
         {children}
-        <Toaster />
+        <Toaster className='bg-white' />
       </body>
     </html>
   );
