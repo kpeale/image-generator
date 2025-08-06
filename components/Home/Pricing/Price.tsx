@@ -4,7 +4,10 @@ import PriceCards from './PriceCards';
 
 const Price = () => {
   return (
-    <div className='pt-16 pb-16 bg-gray-950'>
+    <div
+      className='pt-16 pb-16 bg-gray-950'
+      id='pricing'
+    >
       <div className='w-[80%] mx-auto grid grid-cols-1 xl:grid-cols-2 gap-10 items-center'>
         <div>
           <h1 className='uppercase text-white mb-6 font-bold'>
