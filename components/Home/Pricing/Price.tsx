@@ -40,7 +40,10 @@ const Price = () => {
           </div>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          <div>
+          <div
+            data-aos='fade-right'
+            data-aos-anchor-placement='top-center'
+          >
             <PriceCards
               price='4'
               user='1'
@@ -48,7 +51,11 @@ const Price = () => {
             />
           </div>
 
-          <div>
+          <div
+            data-aos='fade-right'
+            data-aos-anchor-placement='top-center'
+            data-aos-delay='100'
+          >
             <PriceCards
               price='8'
               user='3'
