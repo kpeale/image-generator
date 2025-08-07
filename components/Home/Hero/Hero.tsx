@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
+
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
 import { Loader } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
@@ -10,48 +10,56 @@ const Hero = () => {
   const [prompt, setPrompt] = useState('');
   const [image, setImage] = useState('');
   const [loading, setLoading] = useState(false);
+
   const handleImageGeneration = async () => {
     setLoading(true);
-    const options = {
-      method: 'POST',
-      url: 'https://ai-text-to-image-generator-flux-free-api.p.rapidapi.com/aaaaaaaaaaaaaaaaaiimagegenerator/quick.php',
-      headers: {
-        'x-rapidapi-key': '24347d1698msh866ba75871c2af9p18901cjsn59d157e7cb23',
-        'x-rapidapi-host':
-          'ai-text-to-image-generator-flux-free-api.p.rapidapi.com',
-        'Content-Type': 'application/json',
-      },
-      data: {
-        prompt,
-        style_id: 4,
-        size: '1-1',
-      },
-    };
     try {
-      const response = await axios.request(options);
-      setImage(response.data.final_result[0].origin);
+      // Call your internal API route
+      const response = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          style_id: 4, // You can make these dynamic if needed
+          size: '1-1',
+        }),
+      });
 
-      console.log('API response:', response.data); // <-- ADD THIS
-
-      toast.success('Image generated successfully');
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        toast.error('error.response.data.message');
-      } else {
-        toast.error('An unexpected error occured');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate image.');
       }
+
+      const data = await response.json();
+      if (data.final_result && data.final_result.length > 0) {
+        setImage(data.final_result[0].origin);
+        console.log('API response:', data);
+        toast.success('Image generated successfully');
+      } else {
+        throw new Error('No image found in the response.');
+      }
+    } catch (error) {
+      console.error('Error generating image:', error);
+      toast.error(error.message || 'An unexpected error occurred.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleDownloadImage = () => {
-    const link = document.createElement('a');
-    link.target = '_blank';
-    link.href = image;
-    link.download = 'generated-img.jpg';
-    link.click();
+    if (image) {
+      const link = document.createElement('a');
+      link.target = '_blank';
+      link.href = image;
+      link.download = 'generated-img.jpg';
+      link.click();
+    } else {
+      toast.error('No image to download.');
+    }
   };
+
   return (
     <div className='w-[95%] min-h-screen relative mx-auto mt-[20vh] '>
       <div className='relative z-10 text-white flex-col items-center justify-center'>
@@ -82,12 +90,12 @@ const Hero = () => {
             variant={'default'}
             size={'lg'}
             onClick={handleImageGeneration}
+            disabled={loading || !prompt} // Disable button when loading or prompt is empty
           >
-            Generate
+            {loading ? 'Generating...' : 'Generate'}
           </Button>
         </div>
-
-        <div className='flex items-center justify-center mt-6 gap-3 flex-wrap  '>
+        <div className='flex items-center justify-center mt-6 gap-3 flex-wrap'>
           <p>Popular Tag: </p>
           <Button variant={'secondary'}>Creative</Button>
           <Button variant={'secondary'}>Hyperreality</Button>
@@ -103,7 +111,7 @@ const Hero = () => {
         {image && (
           <div className='mt-8 flex flex-col items-center justify-center mx-auto my-0'>
             <img
-              src={image}
+              src={image || '/placeholder.svg'}
               alt='ai image'
               className='max-w-full h-[500px] rounded-lg shadow-lg '
               loading='lazy'
