@@ -16,7 +16,7 @@ const Hero = () => {
       method: 'POST',
       url: 'https://ai-text-to-image-generator-flux-free-api.p.rapidapi.com/aaaaaaaaaaaaaaaaaiimagegenerator/quick.php',
       headers: {
-        'x-rapidapi-key': '84ec066791msh7231cb03ec33cd1p16b5afjsn102915719077',
+        'x-rapidapi-key': '24347d1698msh866ba75871c2af9p18901cjsn59d157e7cb23',
         'x-rapidapi-host':
           'ai-text-to-image-generator-flux-free-api.p.rapidapi.com',
         'Content-Type': 'application/json',
